@@ -1,0 +1,43 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<div th:include="modules/layout::css"></div>
+
+</head>
+<body class="gray-bg">
+    <div id="app">
+        <div style="border: 1px dashed #000;margin-top: 5px;">
+            <div class="form-group col-sm-4" >
+                时间： <input type="text" id="gameTime" class="form-control layui-input"  readonly="readonly" style="cursor: pointer;"/>
+            </div>
+            <div class="form-group" >
+                google 验证码：<img class="pointer" :src="src" @click="refreshCode"/>
+            </div>
+            <div class="form-group" >
+                google OTP二维码：<img class="pointer" :src="getQrcode" @click="refreshCode"/>
+            </div>
+            <div class="form-group" >
+                vue: {{ message }}
+            </div>
+            <div class="form-group" >
+                model：[[${ctx}]]
+            </div>
+        </div>
+        <div style="border: 1px dashed #000;margin-top: 5px;">
+            <progress id="progressBar" value="0" max="100" style="width: 300px;"></progress>
+            <span id="percentage"></span><span id="time"></span>
+            <input type="file" id="file" name="myfile" />
+            <input type="button" @click="UpladFile" value="上传" />
+            <input type="button" @click="cancleUploadFile" value="取消" />
+            <img class="pointer" :src="valueName" @click="refreshCode" style="width: 150px; "/>
+        </div>
+    </div>
+        <div th:include="modules/layout::list">
+        </div>
+    <div th:include	="modules/layout::js">
+    </div>
+    <script src="../../../js/modules/sys/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+* { margin: 0; padding: 0; }
+
+html { height: 100%; }
+
+body { height: 100%; background-size: cover;}
+
+.dowebok { position: absolute; left: 50%; top: 50%; width: 430px; height: 550px; margin: -300px 0 0 -215px; border: 1px solid #fff; border-radius: 20px; overflow: hidden;}
+
+.logo{
+    margin: 50px auto 80px;
+	width: 104px;
+	height: 104px;
+    border-radius: 20px;
+	background: url(../../img/login.png)no-repeat center center;
+    background-size: contain;
+}
+.form-item { position: relative; width: 360px; margin: 0 auto; padding-bottom: 30px;}
+
+.input_outer{
+	height: 48px;
+	padding: 0 5px;
+	margin-bottom: 30px;
+	border-radius: 50px;
+	position: relative;
+	border: rgba(255,255,255,0.5) 2px solid !important;
+}
+.text{
+	width: 220px !important;
+	height: 48px;
+	outline: none;
+	display: inline-block;
+	font: 14px "microsoft yahei",Helvetica,Tahoma,Arial,"Microsoft jhengHei";
+	margin-left: 50px;
+	border: none !important;
+	background: none !important;
+	line-height: 46px;
+	color: #FFF !important;
+	-moz-box-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; 
+}
+.form-item button { width: 360px; height: 50px; border: 0; border-radius: 25px; font-size: 18px; color: #1f6f4a; outline: none; cursor: pointer; background-color: #fff; }
+
+.u_user{
+	width: 25px;
+	height: 25px;
+	background: url(../../img/user_icon_copy.png)no-repeat 4px 5px;
+	position: absolute;
+	margin: 10px 13px;
+}
+.us_uer{
+	width: 25px;
+	height: 25px;
+	background: url(../../img/lock_icon_copy.png)no-repeat 4px 5px;
+	position: absolute;
+	margin: 10px 13px;
+}
+.tip { display: none; position: absolute; left: 20px; top: 52px; font-size: 14px; color: #f50; }
+
+.reg-bar { width: 360px; margin: 20px auto 0; font-size: 14px; overflow: hidden;}
+
+.reg-bar a { color: #fff; text-decoration: none; }
+
+.reg-bar a:hover { text-decoration: underline; }
+
+.reg-bar .reg { float: left; }
+
+.reg-bar .forget { float: right; }
+
+.dowebok ::-webkit-input-placeholder { font-size: 18px; line-height: 1.4; color: #fff;}
+
+.dowebok :-moz-placeholder { font-size: 18px; line-height: 1.4; color: #fff;}
+
+.dowebok ::-moz-placeholder { font-size: 18px; line-height: 1.4; color: #fff;}
+
+.dowebok :-ms-input-placeholder { font-size: 18px; line-height: 1.4; color: #fff;}
+
+ 
+
+@media screen and (max-width: 500px) {
+* { box-sizing: border-box; }
+
+.dowebok { position: static; width: auto; height: auto; margin: 0 30px; border: 0; border-radius: 0; }
+
+.logo { margin: 50px auto; }
+
+.form-item { width: auto; }
+
+.form-item input, .form-item button, .reg-bar { width: 100%; }
+
+}

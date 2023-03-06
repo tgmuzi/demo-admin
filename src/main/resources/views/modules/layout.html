@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title></title>
+
+</head>
+<body>
+	<div th:fragment="css">
+		<link rel="shortcut icon" href="../../favicon.ico"> 
+		<link href="../../../css/jquery-ui.css" rel="stylesheet">
+		<link href="../../../css/ui.jqgrid.css" rel="stylesheet">
+		<link href="../../../css/pqgrid.min.css" rel="stylesheet">
+		<link href="../../../css/pqgrid.ui.min.css" rel="stylesheet">
+		<link href="../../../css/pqgrid.css" rel="stylesheet">
+		<link href="../../../css/bootstrap.min.css" rel="stylesheet">
+		<link href="../../../css/style.min.css?v=4.0.0" rel="stylesheet"><base target="_blank">
+		<style>
+			body{
+				font-family: "Trebuchet MS", sans-serif;
+				margin: 50px;
+			}
+			.demoHeaders {
+				margin-top: 2em;
+			}
+			#dialog-link {
+				padding: .4em 1em .4em 20px;
+				text-decoration: none;
+				position: relative;
+			}
+			#dialog-link span.ui-icon {
+				margin: 0 5px 0 0;
+				position: absolute;
+				left: .2em;
+				top: 50%;
+				margin-top: -8px;
+			}
+			#icons {
+				margin: 0;
+				padding: 0;
+			}
+			#icons li {
+				margin: 2px;
+				position: relative;
+				padding: 4px 0;
+				cursor: pointer;
+				float: left;
+				list-style: none;
+			}
+			#icons span.ui-icon {
+				float: left;
+				margin: 0 4px;
+			}
+			.fakewindowcontain .ui-widget-overlay {
+				position: absolute;
+			}
+			select {
+				width: 200px;
+			}
+			.pq-grid-col.yellow{
+				background: #ffcc66;
+			}
+			.pq-grid-col label,.pq-grid-cell label{
+				font-weight: normal;
+			}
+		</style>
+	</div>
+	<div th:fragment="list">
+		<div id="jqGrid"></div>
+		<div id="pager2"></div>
+	</div>
+	<nav th:fragment="js">
+		<script th:inline="javascript">
+			var baseURL = [[${ctx}]];
+		</script>
+		<script src="../../../js/vue.js"></script>
+		<script src="../../../js/jquery-3.6.0.js"></script>
+		<script src="../../../js/jquery-ui.min.js"></script>
+		<script src="../../../js/jqgrid/grid.locale-en.js"></script>
+		<script src="../../../js/jqgrid/pqgrid.dev.js"></script>
+		<script src="../../../plugins/layer/layer.js"></script>
+		<script src="../../../plugins/laydate/laydate.js"></script>
+		<script src="../../../plugins/easypiechart/jquery.easypiechart.js"></script>
+	</nav>
+</body>
+</html>

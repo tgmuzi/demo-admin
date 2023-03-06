@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.modules.chat.dao.ChatLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.example.demo.modules.chat.entity.ChatLog">
+        <id column="chat_ID" property="chatId" />
+        <result column="FROM_USER" property="fromUser" />
+        <result column="TO_USER" property="toUser" />
+        <result column="MSG" property="msg" />
+        <result column="TYPE" property="type" />
+        <result column="CODE" property="code" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="CREATE_TIME_TS" property="createTimeTs" />
+    </resultMap>
+
+</mapper>

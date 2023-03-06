@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+First name: <input type="text" id="userName" value="admin"><br>
+Last name: <input type="text" id="password" value="1qaz2wsx"><br>
+<button id="submit" onclick="sysUser()">登 录</button>
+<p>点击"提交"按钮，表单数据将被发送到服务器上的“demo-form.php”。</p>
+
+First name: <input type="text" id="phone" value="admin"><br>
+Last name: <input type="text" id="address" value="1qaz2wsx"><br>
+<button id="submit" onclick="customer()">登 录</button>
+<p>点击"提交"按钮，表单数据将被发送到服务器上的“demo-form.php”。</p>
+Last name: <input type="text" id="phone1" value="1qaz2wsx"><br>
+<button id="submit" onclick="list()">查询</button>
+<div th:include	="modules/layout::js">
+</div>
+</body>
+<script>
+    function sysUser(){
+        var sysUser ={'userName':$("#userName").val(),'password':$("#password").val()}
+        $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: baseURL + "sysUser/save",
+        data: JSON.stringify(sysUser),
+        success:function(result){
+          }
+        });
+    }
+    function customer(){
+        var customer ={'phone':$("#phone").val(),'address':$("#address").val()}
+        $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: baseURL + "customer/save",
+        data: JSON.stringify(customer),
+        success:function(result){
+          }
+        });
+    }
+    function list(){
+        var customer ={'phone':$("#phone1").val()}
+        $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: baseURL + "customer/list",
+        data: JSON.stringify(customer),
+        success:function(r){
+          console.log(r.data);
+          }
+        });
+    }
+</script>
+</html>

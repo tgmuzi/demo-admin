@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>保存更新</title>
+    <link href="../../../css/modules/chat/socketChart.css" rel="stylesheet">
+</head>
+<body>
+    <input name="user" id="user" type="hidden" style="width: 100px">
+    <input name="user" id="getUid" type="hidden" style="width: 100px" value="">
+    <input name="nickName" id="nickName" type="hidden" style="width: 100px" value="">
+    <!-- <div class="talk_con">
+        <div class="talk_show" id="words">
+        </div>
+        <div class="talk_input">
+            <input type="text" name="tenantIds" class="talk_word" id="talkwords">
+            <input type="button" value="发送" class="talk_sub" id="send">
+        </div>
+    </div> -->
+    <div id="hz-main">
+        <div id="hz-message">
+            <!-- 头部 -->
+            正在与<span id="toUser"></span>聊天
+            <hr style="margin: 0px;"/>
+            <!-- 主体 -->
+            <div id="hz-message-body">
+            </div>
+            <!-- 功能条 -->
+            <div id="">
+                <button>表情</button>
+                <button>图片</button>
+                <button id="videoBut">视频</button>
+                <button id="send" onclick="send()" style="float: right;cursor: pointer;">发送</button>
+            </div>
+            <!-- 输入框 -->
+            <div contenteditable="true"  id="talkwords">
+    
+            </div>
+        </div>
+        <div id="hz-group">
+            登录用户：<span id="talks" th:text="${username}">请登录</span>
+            <br/>
+            在线人数:<span id="onlineCount">0</span>
+            <!-- 主体 -->
+            <div id="hz-group-body">
+            </div>
+        </div>
+    </div>
+    <div th:include	="modules/layout::js">
+    </div>
+</body>
+
+<script>
+    var merchantId = '[[${username}]]',nickName = '[[${nickName}]]';
+</script>
+<script src="../../../js/CryptoJS.js"></script>
+<script src="../../../js/aesUtil.js"></script>
+<script src="../../../js/rsaUtil.js"></script>
+<script src="../../../js/modules/chat/socketChart.js"></script>
+<script>
+//    var webSocket = null;
+//    $(document).ready(function () {
+//     $(function () {
+//             login();
+//         });
+//         //先加密
+//         let aesKey = aesUtil.genKey();//秘钥对// 二进制方式接收数据
+//        //模拟不同用户，实际开发中从session或redis里取
+//        //判断当前浏览器是否支持WebSocket
+//        function login() {
+//             $.ajax({
+//                 url:baseURL + "/chat/chatLog/getUUID",
+//                 type: "POST",
+//                 success:function(r){
+//                 $("#user").val(r.data);
+//                 console.log( $("#user").val());
+//                 var user = $("#user").val();
+//                 console.log("user"+ user);
+//                 if("WebSocket" in window) {
+//                     webSocket = new WebSocket("ws://localhost:9001/web_socket/order_notification/" + user+"/"+$("#getUid").val());
+//                     displayMsg(2,'用户【' + user + '】尝试连接')
+        
+//                     //连接发生错误的回调方法
+//                     webSocket.onerror = function(){
+//                         displayMsg(2,"服务器连接【异常】");
+//                     };
+        
+//                         webSocket.binaryType = "arraybuffer";
+        
+//                     //连接成功建立的回调方法
+//                     webSocket.onopen = function(event){
+//                         displayMsg(2,'用户【'+user+'】服务器连接【成功】')
+//                         setInterval(function () {
+//                             webSocket.send("ping")
+//                         },10000)
+//                     }
+//                     //接收到消息的回调方法
+//                     webSocket.onmessage = function(event){
+//                         displayMsg(0,event.data);
+//                     }
+        
+        
+//                     //连接关闭的回调方法
+//                     webSocket.onclose = function(){
+//                         displayMsg(2,"连接关闭");
+//                     }
+        
+        
+//                     //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+//                     window.onbeforeunload = function(){
+//                         websocket.close();
+//                     }
+//                 }else{
+//                     displayMsg(2,'当前浏览器可能不支持WebSocket')
+//                 }
+//                 }
+//                 });
+//        }
+ 
+//        //关闭连接
+//        function closeWebSocket(){
+//            websocket.close();
+//        }
+ 
+//        $("#send").click(function () {
+//         var message = {
+//             msg: $("#tenantIds").html(),
+//             fromUser: $("#user").val(),
+//             toUser: $("#getUid").val(),
+//             type: 1,
+//             code: 1
+//         };
+//            if (message == "") {
+//                displayMsg(2,"访问消息不能为空")
+//            } else {
+//             let data = {
+//                 data:aesUtil.encrypt(JSON.stringify(message),aesKey),aesKey
+//                 }
+//                webSocket.send(JSON.stringify(data));
+//            }
+//        })
+ 
+//        //将消息显示在网页上
+//        function displayMsg(type,innerHTML){
+//             switch(type){
+//                 case 0:
+//                     Msg(innerHTML);
+//                 break;
+//                 case 1:
+//                     Msg(innerHTML);
+//                 break;
+//                 case 2:
+//                 // document.getElementById('asay').innerHTML += innerHTML;
+//                 break;
+
+//             }
+//        }
+//        //将消息显示在网页上
+//        function Msg(innerHTML){
+//         if (!isJSON(innerHTML)) {
+//             // document.getElementById('result').innerHTML += innerHTML + '<br/>';
+//         } else {
+//                 var message = JSON.parse(innerHTML);
+//                 var data = message.data;
+//                 var aesKey =message.aesKey;
+//                 console.log("key：");console.log(aesKey);
+//                 console.log("加密前：");console.log(data);
+//                 //key解密
+//                 let plaintext = aesUtil.decrypt(data,aesKey);
+//                 console.log("加密前：");console.log(plaintext);
+//             if (plaintext.fromUser == $("#user").val()) {
+//                 document.getElementById('words').innerHTML += '<div class="btalk"><span>' + plaintext.fromUser + ' :' + plaintext.msg + '</span></div>';
+//             } else {
+//                 document.getElementById('words').innerHTML += '<div class="atalk"><span>' + plaintext.fromUser + ' :' + plaintext.msg + '</span></div>';
+//             }
+//         }
+//        }
+//    })
+//    function isJSON(str) {
+//         if (typeof str == 'string') {
+//             try {
+//                 var obj=JSON.parse(str);
+//                 if(typeof obj == 'object' && obj ){
+//                     return true;
+//                 }else{
+//                     return false;
+//                 }
+//             } catch(e) {
+//                 console.log('error：'+str+'!!!'+e);
+//                 return false;
+//             }
+//         }
+
+//         console.log('It is not a string!')
+
+//         }
+//     function uuid() {
+//         var uuid ="";
+//           console.log(uuid);
+//           return uuid;
+//         }
+</script>
+</html>
