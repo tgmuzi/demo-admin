@@ -54,11 +54,16 @@
             <artifactId>spring-boot-starter-batch</artifactId>
         </dependency>
 		<!--        引入druid alibaba    begin-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.1.23</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>druid</artifactId>-->
+<!--            <version>1.1.23</version>-->
+<!--        </dependency>-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>1.1.10</version>
+		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
@@ -183,7 +188,12 @@
 			<groupId>org.slf4j</groupId> <!-- 桥接：log4j1使用Log4j2 也支持其他实现到log4j的桥接，引入不同的jar包即可-->
 			<artifactId>log4j-over-slf4j</artifactId>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>1.1.10</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -202,7 +212,7 @@
 			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
+				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>  
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

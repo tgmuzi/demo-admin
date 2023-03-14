@@ -3,9 +3,10 @@ server:
   servler: 
     contest-path: /a
   shutdown: graceful #开启优雅停机
+  publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALcVq9ZroDzIVrpdST6cAn7na7YErVtdNqEbf7qvLrzmfwGdkzGn7vHp+DqIyBwoWRq+47M58d5ui2Uxlx65nBsCAwEAAQ==
 spring:
   profiles:
-    active: dev
+    active: pro
   lifecycle:
     timeout-per-shutdown-phase: 20s #设置缓冲时间 默认30s
   # 指定静态资源的路径

@@ -1,11 +1,20 @@
 package com.example.demo;
 
+import com.alibaba.druid.filter.config.ConfigTools;
+import junit.framework.TestCase;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.*;
 
-class DemoApplicationTests {
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+
+import static com.alibaba.druid.filter.config.ConfigTools.encrypt;
+import static com.alibaba.druid.filter.config.ConfigTools.genKeyPair;
+
+class DemoApplicationTests extends TestCase {
 
 	@Autowired
 	StringEncryptor stringEncryptor;
@@ -28,5 +37,20 @@ class DemoApplicationTests {
 		System.out.println(standardPBEStringEncryptor.decrypt("uiqiG5IN/zZLExCSfnemxGZrIG9kStej"));
 		System.out.println("code=" + code);
 	}
+	@Test
+	public void testPassword() throws Exception {
+		String password = "";
+		String[] arr = genKeyPair(512);
+		System.out.println("privateKey:" + arr[0]);
+		System.out.println("publicKey:" + arr[1]);
+		System.out.println("password:" + encrypt(arr[0], password));
+	}
 
+	public static void main(String[] args) throws Exception {
+		String password = "";
+		String[] arr = genKeyPair(512);
+		System.out.println("privateKey:" + arr[0]);
+		System.out.println("publicKey:" + arr[1]);
+		System.out.println("password:" + encrypt(arr[0], password));
+	}
 }

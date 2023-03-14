@@ -42,7 +42,7 @@ public class LoginServiceImpl extends ServiceImpl<SysUserTokenMapper, SysUserTok
     /**
      * 模拟数据库查询
      *
-     * @param userName 用户名
+     * @param userId 用户名
      * @return User
      */
     @Override
