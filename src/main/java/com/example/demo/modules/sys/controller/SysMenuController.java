@@ -1,5 +1,6 @@
 package com.example.demo.modules.sys.controller;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +34,12 @@ public class SysMenuController extends AbstractController {
     @Autowired
     private ISysMenuService sysMenuService;
 
+    @RequestMapping
+    public String index(Model model, HttpServletRequest request) {
+        //查询是否生效
+        model.addAttribute("ctx", getContextPath() + getAdminPath() + "/");
+        return "modules/game/lotCCgame";
+    }
     /**
      * 用户菜单列表
      */

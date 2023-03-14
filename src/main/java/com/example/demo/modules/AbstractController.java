@@ -1,5 +1,6 @@
 package com.example.demo.modules;
 
+import com.example.demo.config.RemotePropertiesConfig;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,24 +23,12 @@ public abstract class AbstractController {
 	@Autowired
 	private HttpServletRequest request;
 
-	// protected static String GET_PAGE_PATH(String requestMapping, String pageType)
-	// {
-	// if (StringUtils.isBlank(requestMapping)) {
-	// throw new ServiceException("requestMapping参数不能为空!");
-	// }
-	// String temp = null;
-	// StringBuffer sb = new StringBuffer();
-	// if (StringUtils.startsWith(requestMapping, "/")) {
-	// temp = StringUtils.substringAfter(requestMapping, "/");
-	// } else {
-	// temp = requestMapping;
-	// }
-	// sb.append(temp).append("/").append(StringUtils.substringAfterLast(requestMapping,
-	// "/"));
-	// return sb.toString() + Character.toUpperCase(pageType.charAt(0)) +
-	// pageType.substring(1);
-	// }
+	@Autowired
+	private RemotePropertiesConfig remotePropertiesConfig;
 
+	public String getAdminPath() {
+		return remotePropertiesConfig.getAdminPath();
+	}
 	protected SysUser getUser() {
 		return (SysUser) SecurityUtils.getSubject().getPrincipal();
 	}

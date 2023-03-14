@@ -1,12 +1,11 @@
 server:
   port: 9001
-  servler: 
+  servler:
     contest-path: /a
   shutdown: graceful #开启优雅停机
-  publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALcVq9ZroDzIVrpdST6cAn7na7YErVtdNqEbf7qvLrzmfwGdkzGn7vHp+DqIyBwoWRq+47M58d5ui2Uxlx65nBsCAwEAAQ==
 spring:
   profiles:
-    active: pro
+    active: dev
   lifecycle:
     timeout-per-shutdown-phase: 20s #设置缓冲时间 默认30s
   # 指定静态资源的路径
@@ -24,7 +23,7 @@ spring:
       max-file-size: 1MB # 单文件上传最大限制
       max-request-size: 10MB # 文件上传最大值
       file-size-threshold: 1000KB # 上传文件达到多大时写入磁盘
-      location: G:/file/upload # 临时文件存储位置  
+      location: G:/file/upload # 临时文件存储位置
 #mybatis
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml
@@ -49,9 +48,9 @@ mybatis-plus:
     #meta-object-handler: com.baomidou.springboot.xxx
     #自定义SQL注入器
     #sql-injector: com.baomidou.springboot.xxx
-  configuration:  
+  configuration:
     map-underscore-to-camel-case: true
-  type-handlers-package: com.example.demo.utils  
+  type-handlers-package: com.example.demo.utils
 
 logging:
   config: classpath:logback-spring.xml

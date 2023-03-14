@@ -1,5 +1,6 @@
 package com.example.demo.modules.user.controller;
 
+import com.example.demo.modules.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.example.demo.config.DruidConfig;
 import com.example.demo.modules.user.entity.SysUser;
 import com.example.demo.modules.user.service.SysUserService;
 import com.example.demo.utils.AjaxObject;
@@ -17,7 +17,7 @@ import cn.hutool.core.lang.Console;
 
 @Controller
 @RequestMapping("${adminPath}/sysUser")
-public class SysUserController extends DruidConfig {
+public class SysUserController extends AbstractController {
 
     @Autowired
     private SysUserService sysUserService;

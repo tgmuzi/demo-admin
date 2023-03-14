@@ -1,21 +1,18 @@
 package com.example.demo.modules.chat.controller;
 
+import com.example.demo.modules.AbstractController;
+import com.example.demo.utils.AjaxObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.config.DruidConfig;
-import com.example.demo.utils.AjaxObject;
-
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 
 /**
  * <p>
@@ -27,7 +24,7 @@ import org.springframework.ui.Model;
  */
 @Controller
 @RequestMapping("${adminPath}/chat/chatLog")
-public class ChatLogController extends DruidConfig {
+public class ChatLogController extends AbstractController {
 
     @PostMapping("/getUUID")
     @ResponseBody

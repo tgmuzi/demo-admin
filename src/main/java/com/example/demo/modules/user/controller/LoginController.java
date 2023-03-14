@@ -1,34 +1,10 @@
 package com.example.demo.modules.user.controller;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Random;
-import java.util.UUID;
-
-import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.shiro.crypto.hash.Sha256Hash;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.alibaba.druid.util.StringUtils;
-import com.example.demo.config.DruidConfig;
 import com.example.demo.exception.BusinessException;
 import com.example.demo.googleConfig.GoogleAuthenticator;
 import com.example.demo.googleConfig.QRCodeUtil;
+import com.example.demo.modules.AbstractController;
 import com.example.demo.modules.user.entity.SysUser;
 import com.example.demo.modules.user.entity.User;
 import com.example.demo.modules.user.service.LoginService;
@@ -36,10 +12,27 @@ import com.example.demo.utils.AjaxObject;
 import com.example.demo.utils.ShiroUtils;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Random;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("${adminPath}")
-public class LoginController {
+public class LoginController extends AbstractController{
 
     private Logger log = LoggerFactory.getLogger(LoginController.class);
 
@@ -48,9 +41,6 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
-
-    @Autowired
-    private DruidConfig druidConfig;
 
     @RequestMapping("/log")
     @ResponseBody
@@ -102,7 +92,7 @@ public class LoginController {
      */
     @RequestMapping(value = { "login" }, method = RequestMethod.GET)
     public String login(HttpServletRequest request, Model model) {
-        model.addAttribute("ctx", druidConfig.getAdminPath() + "/");
+        model.addAttribute("ctx", getAdminPath() + "/");
         return "modules/sys/login";
     }
 
@@ -135,25 +125,25 @@ public class LoginController {
 
     @RequestMapping("/echarts")
     public String echarts(HttpServletRequest request, Model model) {
-        model.addAttribute("ctx", druidConfig.getAdminPath() + "/");
+        model.addAttribute("ctx", getAdminPath() + "/");
         return "modules/sys/echarts";
     }
 
     @GetMapping("/main")
     public String main(HttpServletRequest request, Model model) {
-        model.addAttribute("ctx", druidConfig.getAdminPath() + "/");
+        model.addAttribute("ctx", getAdminPath() + "/");
         return "modules/sys/main";
     }
 
     @GetMapping("/chat")
     public String chat(HttpServletRequest request, Model model) {
-        model.addAttribute("ctx", druidConfig.getAdminPath() + "/");
+        model.addAttribute("ctx", getAdminPath() + "/");
         return "modules/sys/chat";
     }
 
     @GetMapping("/sysUser")
     public String sysUser(HttpServletRequest request, Model model) {
-        model.addAttribute("ctx", druidConfig.getAdminPath() + "/");
+        model.addAttribute("ctx", getAdminPath() + "/");
         return "modules/sys/sysUser";
     }
 
@@ -161,7 +151,7 @@ public class LoginController {
     public String chat1(HttpServletRequest request, Model model) {
         Integer uuid = UUID.randomUUID().toString().replaceAll("-", "").hashCode();
         uuid = uuid < 0 ? -uuid : uuid;// String.hashCode() 值会为空
-        model.addAttribute("ctx", druidConfig.getAdminPath() + "/");
+        model.addAttribute("ctx", getAdminPath() + "/");
         model.addAttribute("username", uuid);
         model.addAttribute("nickName", getRandomChar());
         return "modules/chat/newChat";
@@ -169,7 +159,7 @@ public class LoginController {
 
     @RequestMapping("/")
     public String index(HttpServletRequest request, Model model) {
-        model.addAttribute("ctx", druidConfig.getAdminPath() + "/");
+        model.addAttribute("ctx", getAdminPath() + "/");
         return "modules/sys/index";
     }
 
