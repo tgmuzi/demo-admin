@@ -5,9 +5,7 @@ server:
   shutdown: graceful #开启优雅停机
 spring:
   profiles:
-    active: dev
-  lifecycle:
-    timeout-per-shutdown-phase: 20s #设置缓冲时间 默认30s
+    active: test
   # 指定静态资源的路径
   resources:
     static-locations: classpath:/static/,classpath:/views/
@@ -50,7 +48,7 @@ mybatis-plus:
     #sql-injector: com.baomidou.springboot.xxx
   configuration:
     map-underscore-to-camel-case: true
-  type-handlers-package: com.example.demo.utils
+    cache-enabled: false
 
 logging:
   config: classpath:logback-spring.xml
@@ -69,3 +67,4 @@ jasypt:
           suffix: )
 
 adminPath: /a
+secret-key: MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAkSrWZaLEX3d6ikrUuZCQA1YzPk9hvx1HiadVtEA1tKZXNl6f+20+UDjjik2TZNVy8al5mvoe9dEGmcGpFWvtnQIDAQABAkBHKafGVR9M6WYx6vMTMJHYgOZH8mQpavIJwfUakquBLZf/BF8A95pNMyQWM7OP+IxqfJFFF0AdhEjsy1mU6/FlAiEA1NB4lBQglLmLTvqQifImzZ8kmTz6/ueXCUO8/jPbQUsCIQCuoCkTiNZm0rllJ6YzkD52w0miLT3uKNJfj8FAhmkjtwIgJwnO9Kr0hxO6QFSqawOmppWI6ytKh7QH+sUYSDFPCR0CIEe0jolt9BQuzWAjItUjkvKziCXnC/oimxgQcJttVfkLAiEAktkvpFvkH6Ex/fjt6h3dlvr7aJL0OayvnlbOQV1fBYc=

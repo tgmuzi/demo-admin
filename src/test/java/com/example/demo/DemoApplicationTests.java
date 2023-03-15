@@ -47,10 +47,16 @@ class DemoApplicationTests extends TestCase {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String password = "";
+		String password = "900217ai";
 		String[] arr = genKeyPair(512);
 		System.out.println("privateKey:" + arr[0]);
 		System.out.println("publicKey:" + arr[1]);
 		System.out.println("password:" + encrypt(arr[0], password));
+//
+
+
+//		String e = JasyptUtils.encrypt("900217ai");
+//		System.out.println(e);
+//		System.out.println(JasyptUtils.decrypt(e) + "???");
 	}
 }

@@ -2,6 +2,7 @@ package com.example.demo.modules.user.service.impl;
 
 import java.util.List;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class CustomerSreviceImpl extends ServiceImpl<CustomerMapper, Customer> i
     }
 
     @Override
+    @DS("slave")
     public List<Customer> findCustomer(Encrypt phone) {
         return customerMapper.findCustomer(phone);
     }

@@ -14,6 +14,6 @@ public interface CustomerMapper extends BaseMapper<Customer> {
 
     int addCustomer(@Param("id") Long id, @Param("phone") Encrypt phone, @Param("address") String address);
 
-    List<Customer> findCustomer(@Param("phone") Encrypt phone);
+    List<Customer> findCustomer(Encrypt phone);
 
 }

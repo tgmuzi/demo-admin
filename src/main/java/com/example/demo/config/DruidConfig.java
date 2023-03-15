@@ -26,41 +26,41 @@ import java.util.List;
 @Configuration
 public class DruidConfig {
     private Logger logger = LoggerFactory.getLogger(DruidConfig.class);
-    @Value("${spring.datasource.url:#{null}}")
+    @Value("${spring.datasource.master.url:#{null}}")
     private String dbUrl;
-    @Value("${spring.datasource.username: #{null}}")
+    @Value("${spring.datasource.master.username: #{null}}")
     private String username;
-    @Value("${spring.datasource.password:#{null}}")
+    @Value("${spring.datasource.master.password:#{null}}")
     private String password;
-    @Value("${spring.datasource.driverClassName:#{null}}")
+    @Value("${spring.datasource.master.driverClassName:#{null}}")
     private String driverClassName;
-    @Value("${spring.datasource.initialSize:#{null}}")
+    @Value("${spring.datasource.master.druid.initialSize:#{null}}")
     private Integer initialSize;
-    @Value("${spring.datasource.minIdle:#{null}}")
+    @Value("${spring.datasource.master.druid.minIdle:#{null}}")
     private Integer minIdle;
-    @Value("${spring.datasource.maxActive:#{null}}")
+    @Value("${spring.datasource.master.druid.maxActive:#{null}}")
     private Integer maxActive;
-    @Value("${spring.datasource.maxWait:#{null}}")
+    @Value("${spring.datasource.master.druid.maxWait:#{null}}")
     private Integer maxWait;
-    @Value("${spring.datasource.timeBetweenEvictionRunsMillis:#{null}}")
+    @Value("${spring.datasource.master.druid.timeBetweenEvictionRunsMillis:#{null}}")
     private Integer timeBetweenEvictionRunsMillis;
-    @Value("${spring.datasource.minEvictableIdleTimeMillis:#{null}}")
+    @Value("${spring.datasource.master.druid.minEvictableIdleTimeMillis:#{null}}")
     private Integer minEvictableIdleTimeMillis;
-    @Value("${spring.datasource.validationQuery:#{null}}")
+    @Value("${spring.datasource.master.druid.validationQuery:#{null}}")
     private String validationQuery;
-    @Value("${spring.datasource.testWhileIdle:#{null}}")
+    @Value("${spring.datasource.master.druid.testWhileIdle:#{null}}")
     private Boolean testWhileIdle;
-    @Value("${spring.datasource.testOnBorrow:#{null}}")
+    @Value("${spring.datasource.master.druid.testOnBorrow:#{null}}")
     private Boolean testOnBorrow;
-    @Value("${spring.datasource.testOnReturn:#{null}}")
+    @Value("${spring.datasource.master.druid.testOnReturn:#{null}}")
     private Boolean testOnReturn;
-    @Value("${spring.datasource.poolPreparedStatements:#{null}}")
+    @Value("${spring.datasource.master.druid.poolPreparedStatements:#{null}}")
     private Boolean poolPreparedStatements;
-    @Value("${spring.datasource.maxPoolPreparedStatementPerConnectionSize:#{null}}")
+    @Value("${spring.datasource.master.druid.maxPoolPreparedStatementPerConnectionSize:#{null}}")
     private Integer maxPoolPreparedStatementPerConnectionSize;
-    @Value("${spring.datasource.filters:#{null}}")
+    @Value("${spring.datasource.master.druid.filters:#{null}}")
     private String filters;
-    @Value("${spring.datasource.connectionProperties:#{null}}")
+    @Value("${spring.datasource.master.druid.connectionProperties:#{null}}")
     private String connectionProperties;
 
     @Bean

@@ -3,59 +3,25 @@ package com.example.demo.modules.user.entity;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.example.demo.utils.Encrypt;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
+@AllArgsConstructor
 public class Customer extends Model<Customer> {
 
+    @TableId("ID")
     private Long id;
+    @TableField("PHONE")
     private Encrypt phone;
+    @TableField("ADDRESS")
     private String address;
-
-    /**
-     * @return String return the phone
-     */
-    public Encrypt getPhone() {
-        return phone;
-    }
-
-    /**
-     * @param phone the phone to set
-     */
-    public void setPhone(Encrypt phone) {
-        this.phone = phone;
-    }
-
-    /**
-     * @return String return the address
-     */
-    public String getAddress() {
-        return address;
-    }
-
-    /**
-     * @param address the address to set
-     */
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     @Override
     protected Serializable pkVal() {
-        return id;
+        return null;
     }
-
-    /**
-     * @return Long return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 }
