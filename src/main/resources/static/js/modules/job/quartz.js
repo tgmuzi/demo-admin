@@ -19,7 +19,6 @@ var onCreateFun = {
     initInFqcProInfoGrdFun: function () {
       var obj = {
             numberCell:{resizable:true,title:"#",width:30,minWidth:30},
-            title: "带有数组数据的网格",
             resizable:true,
             wrap:false,
             pageModel: { type: "local", rPP: 10 ,rPPOptions: [10, 50, 100 , 500 , 1000 , 10000, 100000], float:"right"},
