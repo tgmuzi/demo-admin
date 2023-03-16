@@ -65,7 +65,7 @@ public class MybatisplusGenerator extends TestCase {
 
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("");
+        dsc.setPassword("900217ai");
         dsc.setUrl(
                 "jdbc:mysql://127.0.0.1:3306/jeepaydb?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8");
         mpg.setDataSource(dsc);
@@ -75,7 +75,7 @@ public class MybatisplusGenerator extends TestCase {
         // strategy.setTablePrefix(new String[]{"LOT_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
         strategy.setInclude(new String[] {
-                "chat_log"
+                "schedule_job"
         }); // 需要生成的表
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 字段名生成策略
@@ -103,10 +103,10 @@ public class MybatisplusGenerator extends TestCase {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setParent("com.example.demo.modules");
-        pc.setModuleName("chat");
+        pc.setModuleName("quartz");
         pc.setController("controller");
         pc.setMapper("dao");
-        pc.setXml("mapper.chat");
+        pc.setXml("mapper.job");
         // pc.setController("controller");
         mpg.setPackageInfo(pc);
 

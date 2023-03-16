@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>QuartzDemo</title>
+    <div th:include="modules/layout::css"></div>
+    <style>
+      #top {
+	      background:#20A0FF;
+	      padding:5px;
+	      overflow:hidden
+      }
+    </style>
+</head>
+<body class="gray-bg">
+<div id="app">
+    <div th:include="modules/layout::list">
+    </div>
+</div>
+
+<footer align="center">
+    <p>&copy; Quartz 任务管理</p>
+</footer>
+<div th:include="modules/layout::js">
+</div>
+<script src="../../../js/modules/job/quartz.js"></script>
+</body>
+</html>
