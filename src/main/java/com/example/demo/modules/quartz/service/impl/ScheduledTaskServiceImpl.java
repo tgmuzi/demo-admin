@@ -1,22 +1,26 @@
 package com.example.demo.modules.quartz.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import com.example.demo.modules.quartz.dao.ScheduleJobMapper;
 import com.example.demo.modules.quartz.entity.ScheduleJob;
+import com.example.demo.modules.quartz.entity.ScheduleRunnable;
 import com.example.demo.modules.quartz.service.IScheduleJobService;
 import com.example.demo.modules.quartz.service.ScheduledTaskService;
 import com.example.demo.modules.quartz.task.ScheduledOfTask;
 import com.example.demo.modules.quartz.utils.SpringContextUtil;
 import groovy.util.logging.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
@@ -24,6 +28,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ScheduledTaskServiceImpl implements ScheduledTaskService {
 
     private Logger log = Logger.getLogger(ScheduledTaskServiceImpl.class);
+    private org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
+    private ExecutorService service = Executors.newSingleThreadExecutor();
 
     /**
      * 可重入锁
@@ -41,8 +47,8 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
      */
     public Map<String, ScheduledFuture> scheduledFutureMap = new ConcurrentHashMap<>();
 
-//    @Autowired
-//    private IScheduleJobService scheduledJobService;
+    @Autowired
+    private ScheduleJobMapper scheduleJobMapper;
 
     @Override
     public Boolean start(ScheduleJob scheduledJob) {
@@ -113,24 +119,42 @@ public class ScheduledTaskServiceImpl implements ScheduledTaskService {
             return;
         Class<?> clazz;
         ScheduledOfTask task;
+        //任务开始时间
+        long startTime = System.currentTimeMillis();
+
         try {
-            clazz = Class.forName(sj.getMethodName());
-            task = (ScheduledOfTask) SpringContextUtil.getBean(clazz);
-        } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("spring_scheduled_cron表数据" + sj.getMethodName() + "有误", e);
+            //执行任务
+            logger.info("任务准备执行，任务ID：" + sj.getJobId());
+            ScheduleRunnable task1 = new ScheduleRunnable(sj.getBeanName(),
+                    sj.getMethodName(), sj.getParams());
+            Future<?> future = service.submit(task1);
+
+            future.get();
+
+            //任务执行总时长
+            long times = System.currentTimeMillis() - startTime;
+
+            logger.info("任务执行完毕，任务ID：" + sj.getJobId() + "  总共耗时：" + times + "毫秒");
+        } catch (Exception e) {
+            logger.error("任务执行失败，任务ID：" + sj.getJobId(), e);
+            //任务执行总时长
+            long times = System.currentTimeMillis() - startTime;
+            //任务状态    0：成功    1：失败
+        }finally {
         }
-        Assert.isAssignable(ScheduledOfTask.class, task.getClass(), "定时任务类必须实现ScheduledOfTask接口");
-        ScheduledFuture scheduledFuture = threadPoolTaskScheduler.schedule(task,(triggerContext -> new CronTrigger(sj.getCronExpression()).nextExecutionTime(triggerContext)));
-        scheduledFutureMap.put(sj.getMethodName(),scheduledFuture);
+//        Assert.isAssignable(ScheduledOfTask.class, task.getClass(), "定时任务类必须实现ScheduledOfTask接口");
+//        ScheduledFuture scheduledFuture = threadPoolTaskScheduler.schedule(task,(triggerContext -> new CronTrigger(sj.getCronExpression()).nextExecutionTime(triggerContext)));
+//        scheduledFutureMap.put(sj.getMethodName(),scheduledFuture);
     }
 
     @Override
     public void initTask() {
-//        List<ScheduleJob> list = scheduledJobService.list("handsfeeRechargeQueryTask");
-//        for (ScheduleJob sj : list) {
-//            if("-1".equals(sj.getStatus())) //未启用
-//                continue;
-//            doStartTask(sj);
-//        }
+        Map<String,Object> map =new HashMap<>();
+        List<ScheduleJob> list = scheduleJobMapper.queryList(map);
+        for (ScheduleJob sj : list) {
+            if("-1".equals(sj.getStatus())) //未启用
+                continue;
+            doStartTask(sj);
+        }
     }
 }

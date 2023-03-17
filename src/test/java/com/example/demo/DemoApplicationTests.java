@@ -47,7 +47,7 @@ class DemoApplicationTests extends TestCase {
 	}
 
 	public static void main(String[] args) throws Exception {
-		String password = "900217ai";
+		String password = "y2wc05s7ou1ea5ljtk@3K";
 		String[] arr = genKeyPair(512);
 		System.out.println("privateKey:" + arr[0]);
 		System.out.println("publicKey:" + arr[1]);

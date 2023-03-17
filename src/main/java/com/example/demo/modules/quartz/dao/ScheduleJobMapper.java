@@ -22,4 +22,5 @@ public interface ScheduleJobMapper extends BaseMapper<ScheduleJob> {
     List<ScheduleJob> queryObject(String value);
     List<ScheduleJob> queryDbJobByBeanName(String value);
     List<ScheduleJob> queryList(RowBounds rowBounds, Map<String ,Object> map);
+    List<ScheduleJob> queryList(Map<String ,Object> map);
 }
