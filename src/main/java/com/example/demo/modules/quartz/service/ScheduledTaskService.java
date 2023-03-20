@@ -11,4 +11,6 @@ public interface ScheduledTaskService{
     Boolean restart(ScheduleJob scheduledJob);
 
     void initTask();
+
+    void All_Bot();
 }
