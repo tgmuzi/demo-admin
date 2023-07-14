@@ -45,18 +45,25 @@ class DemoApplicationTests extends TestCase {
 		System.out.println("publicKey:" + arr[1]);
 		System.out.println("password:" + encrypt(arr[0], password));
 	}
-
+	@Test
+	public void databaseJieMi() throws Exception {
+		String key = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALX6migCbkx3GKoqzk8pZm4DOUKLcNQRQKIpM+8ozY6548A7F7Lx8qieHq26cnIIihw2dbYNtLGAiISOBYg+bqUCAwEAAQ==";
+		String password = "MK+90J8aAWQIjeL7+AFIq0dDQvUgXoih67jwPftfgs918tywCF9pCB3s6oY0apEo8mn+hClDWRmSeZr4mS2IiA==";
+		System.out.println("PASSWORD:" + ConfigTools.decrypt(key,password));
+	}
 	public static void main(String[] args) throws Exception {
-		String password = "y2wc05s7ou1ea5ljtk@3K";
-		String[] arr = genKeyPair(512);
-		System.out.println("privateKey:" + arr[0]);
-		System.out.println("publicKey:" + arr[1]);
-		System.out.println("password:" + encrypt(arr[0], password));
+		String password = "900217ai";
+//		String[] arr = genKeyPair(512);
+//		System.out.println("privateKey:" + arr[0]);
+//		System.out.println("publicKey:" + arr[1]);
+//		System.out.println("password:" + encrypt(arr[0], password));
 //
+//		String key = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALX6migCbkx3GKoqzk8pZm4DOUKLcNQRQKIpM+8ozY6548A7F7Lx8qieHq26cnIIihw2dbYNtLGAiISOBYg+bqUCAwEAAQ==";
+//		String password = "MK+90J8aAWQIjeL7+AFIq0dDQvUgXoih67jwPftfgs918tywCF9pCB3s6oY0apEo8mn+hClDWRmSeZr4mS2IiA==";
+//		System.out.println("PASSWORD:" + ConfigTools.decrypt(key,password));
 
-
-//		String e = JasyptUtils.encrypt("900217ai");
-//		System.out.println(e);
-//		System.out.println(JasyptUtils.decrypt(e) + "???");
+		String e = JasyptUtils.encrypt(password);
+		System.out.println(e);
+		System.out.println(JasyptUtils.decrypt(e) + "???");
 	}
 }
