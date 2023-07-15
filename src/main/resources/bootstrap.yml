@@ -4,7 +4,7 @@ spring:
   profiles:
     tenant: local
     active: test
-  cloud:
+  cloud: #开始consul配置 文件名称 bootstrap.yml
     consul:
       host: 192.168.5.137
       port: 8500
@@ -25,6 +25,7 @@ spring:
         serviceName: demo-${spring.profiles.tenant}
         #强制以获取ip的方式注册到consul
         prefer-ip-address: true
+        #结束consul配置
   # 指定静态资源的路径
   resources:
     static-locations: classpath:/static/,classpath:/views/

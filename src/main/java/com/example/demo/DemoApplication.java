@@ -13,7 +13,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
+
+//consul配置
 @EnableDiscoveryClient
+//consul配置
 @EnableHystrix//加@EnableHystrix注解开启Hystrix
 public class DemoApplication extends SpringBootServletInitializer {
 

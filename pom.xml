@@ -19,6 +19,7 @@
         <mybatisplus.version>2.1.9</mybatisplus.version>
 	</properties>
 
+	<!--consul配置-->
 	<dependencyManagement>
 	<dependencies>
 	<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
@@ -31,6 +32,7 @@
 	</dependency>
 	</dependencies>
 	</dependencyManagement>
+	<!--end  consul配置-->
 
 	<dependencies>
 		<dependency>
@@ -260,6 +262,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-consul-all</artifactId>
 		</dependency>
+		<!--end  consul配置-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>

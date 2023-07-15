@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
 * @Author muzi
-* @Description Admin工程服务健康检查
+* @Description consul工程服务健康检查
 * @Param
 * @return
 **/
