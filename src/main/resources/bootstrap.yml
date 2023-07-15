@@ -1,11 +1,30 @@
-server:
-  port: 9001
-  servler:
-    contest-path: /a
-  shutdown: graceful #开启优雅停机
 spring:
+  application:
+    name: demo
   profiles:
+    tenant: local
     active: test
+  cloud:
+    consul:
+      host: 192.168.5.137
+      port: 8500
+      token: 5ae5ec2e-e520-b98f-023c-81a25a02b30c
+      config:
+        enabled: true #enabled将此值设置为“false”将禁用Consul配置
+        format: FILES
+        prefix: lottery-config/${spring.application.name}/${spring.profiles.tenant}
+        watch:
+          enabled: true
+      discovery:
+        enabled: true
+        tags: chineseName=${spring.profiles.tenant}工程, shortcut=api,management.context-path=${management.endpoints.web.base-path}
+        healthCheckPath: /demo-health-check
+        healthCheckInterval: 10s
+        #集群环境下保证唯一的instanceId
+        instanceId: ${spring.application.name}:${spring.profiles.tenant}:${spring.cloud.client.ip-address}:${server.port}
+        serviceName: demo-${spring.profiles.tenant}
+        #强制以获取ip的方式注册到consul
+        prefer-ip-address: true
   # 指定静态资源的路径
   resources:
     static-locations: classpath:/static/,classpath:/views/
@@ -22,6 +41,35 @@ spring:
       max-request-size: 10MB # 文件上传最大值
       file-size-threshold: 1000KB # 上传文件达到多大时写入磁盘
       location: G:/file/upload # 临时文件存储位置
+
+server:
+  port: 9001
+  servler:
+    contest-path: /a
+  shutdown: graceful #开启优雅停机
+
+management:
+  endpoints:
+    web:
+      base-path: /tgActuatorManage
+      exposure:
+        #展示某些端点（默认展示health,info，其余均禁止）
+        include: health,info,metrics,threaddump,heapdump
+      # CORS跨域支持
+      cors:
+        allowed-origins: "*"
+        allowed-methods: GET,POST
+  #health端点的访问权限
+  endpoint:
+    health:
+      #选择展示
+      show-details: always
+  health:
+    solr:
+      enabled: false
+    redis:
+      enabled: false
+
 #mybatis
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml
@@ -61,10 +109,10 @@ jasypt:
   encryptor:
     password: FKf1Oa+MMZPM8V2SUA1v3qIlkIN+SmpS
     property:
-          #自定义前缀
-          prefix: TGLOCAL(
-          #自定义后缀
-          suffix: )
+      #自定义前缀
+      prefix: TGLOCAL(
+      #自定义后缀
+      suffix: )
 
 adminPath: /a
 secret-key: MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAkSrWZaLEX3d6ikrUuZCQA1YzPk9hvx1HiadVtEA1tKZXNl6f+20+UDjjik2TZNVy8al5mvoe9dEGmcGpFWvtnQIDAQABAkBHKafGVR9M6WYx6vMTMJHYgOZH8mQpavIJwfUakquBLZf/BF8A95pNMyQWM7OP+IxqfJFFF0AdhEjsy1mU6/FlAiEA1NB4lBQglLmLTvqQifImzZ8kmTz6/ueXCUO8/jPbQUsCIQCuoCkTiNZm0rllJ6YzkD52w0miLT3uKNJfj8FAhmkjtwIgJwnO9Kr0hxO6QFSqawOmppWI6ytKh7QH+sUYSDFPCR0CIEe0jolt9BQuzWAjItUjkvKziCXnC/oimxgQcJttVfkLAiEAktkvpFvkH6Ex/fjt6h3dlvr7aJL0OayvnlbOQV1fBYc=

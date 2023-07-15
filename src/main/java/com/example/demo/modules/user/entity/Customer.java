@@ -5,12 +5,10 @@ import java.io.Serializable;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 import com.example.demo.utils.Encrypt;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
-@AllArgsConstructor
+@TableName("customer")
 public class Customer extends Model<Customer> {
 
     @TableId("ID")
@@ -23,5 +21,29 @@ public class Customer extends Model<Customer> {
     @Override
     protected Serializable pkVal() {
         return null;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Encrypt getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Encrypt phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
