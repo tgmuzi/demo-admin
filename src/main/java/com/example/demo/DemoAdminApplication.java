@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
@@ -18,10 +17,10 @@ import org.springframework.web.client.RestTemplate;
 @EnableDiscoveryClient
 //consul配置
 @EnableHystrix//加@EnableHystrix注解开启Hystrix
-public class DemoApplication extends SpringBootServletInitializer {
+public class DemoAdminApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(DemoApplication.class);
+		SpringApplication app = new SpringApplication(DemoAdminApplication.class);
 		app.run(args);
 		// SpringApplication.run(DemoApplication.class, args);
 	}
@@ -33,6 +32,6 @@ public class DemoApplication extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(DemoApplication.class);
+		return application.sources(DemoAdminApplication.class);
 	}
 }
