@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HealthCheckController {
 
-	@GetMapping("/demo-health-check")
+	@GetMapping("/demo-admin-health-check")
 	public ResponseEntity<String> customCheck() {
-	    String message = "demo服务健康检查";
+	    String message = "demo-admin服务健康检查";
 	    return new ResponseEntity<>(message, HttpStatus.OK);
 	}
 

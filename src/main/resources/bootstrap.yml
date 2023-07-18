@@ -1,6 +1,6 @@
 spring:
   application:
-    name: demo
+    name: demo-admin
   profiles:
     tenant: local
     active: test
@@ -17,12 +17,12 @@ spring:
           enabled: true
       discovery:
         enabled: true
-        tags: chineseName=${spring.profiles.tenant}工程, shortcut=api,management.context-path=${management.endpoints.web.base-path}
-        healthCheckPath: /demo-health-check
+        tags: chineseName=${spring.profiles.tenant}后台工程, shortcut=admin,management.context-path=${management.endpoints.web.base-path}
+        healthCheckPath: /demo-admin-health-check
         healthCheckInterval: 10s
         #集群环境下保证唯一的instanceId
         instanceId: ${spring.application.name}:${spring.profiles.tenant}:${spring.cloud.client.ip-address}:${server.port}
-        serviceName: demo-${spring.profiles.tenant}
+        serviceName: demo-admin-${spring.profiles.tenant}
         #强制以获取ip的方式注册到consul
         prefer-ip-address: true
         #结束consul配置

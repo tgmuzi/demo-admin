@@ -192,7 +192,7 @@
             <appender-ref ref="ALL_FILE" />
         </root>
         <logger name="com.example.demo" level="warn"/> <!-- 生产环境, 指定某包日志为warn级 -->
-        <logger name="com.example.demo.DemoApplication" level="info"/> <!-- 特定某个类打印info日志, 比如application启动成功后的提示语 -->
+        <logger name="com.example.demo.DemoAdminApplication" level="info"/> <!-- 特定某个类打印info日志, 比如application启动成功后的提示语 -->
     </springProfile>
 
 </configuration>
