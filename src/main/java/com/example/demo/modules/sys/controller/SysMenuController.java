@@ -1,13 +1,13 @@
 package com.example.demo.modules.sys.controller;
 
+import com.example.demo.modules.sys.entity.SysMenu;
+import com.example.demo.service.modules.sys.service.ISysMenuService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.modules.AbstractController;
-import com.example.demo.modules.sys.entity.SysMenu;
-import com.example.demo.modules.sys.service.ISysMenuService;
 import com.example.demo.utils.AjaxObject;
 
 import java.util.HashMap;

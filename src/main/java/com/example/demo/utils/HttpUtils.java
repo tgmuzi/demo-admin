@@ -1,6 +1,6 @@
 package com.example.demo.utils;
 
-import com.example.demo.exception.BusinessException;
+import com.example.demo.modules.exception.BusinessException;
 import org.apache.commons.codec.Charsets;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

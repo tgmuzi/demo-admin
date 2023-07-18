@@ -1,5 +1,8 @@
 package com.example.demo.modules.oAuth;
 
+import com.example.demo.service.modules.user.service.LoginService;
+import com.example.demo.service.modules.user.service.ShiroService;
+import com.example.demo.utils.oAuth.OAuth2Token;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -16,8 +19,6 @@ import org.springframework.stereotype.Component;
 import com.alibaba.druid.util.StringUtils;
 import com.example.demo.modules.user.entity.SysUser;
 import com.example.demo.modules.user.entity.SysUserToken;
-import com.example.demo.modules.user.service.LoginService;
-import com.example.demo.modules.user.service.ShiroService;
 
 @Component
 public class CustomRealm extends AuthorizingRealm {
