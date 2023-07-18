@@ -1,18 +1,16 @@
 package com.example.demo.modules.user.controller;
 
 import com.alibaba.druid.util.StringUtils;
-import com.example.demo.exception.BusinessException;
 import com.example.demo.googleConfig.GoogleAuthenticator;
 import com.example.demo.googleConfig.QRCodeUtil;
 import com.example.demo.modules.AbstractController;
 import com.example.demo.modules.user.entity.SysUser;
 import com.example.demo.modules.user.entity.User;
-import com.example.demo.modules.user.service.LoginService;
+import com.example.demo.service.modules.user.service.LoginService;
 import com.example.demo.utils.AjaxObject;
 import com.example.demo.utils.ShiroUtils;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +27,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 import java.util.UUID;
+
 
 @Controller
 @RequestMapping("${adminPath}")
