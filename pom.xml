@@ -6,6 +6,7 @@
 	<groupId>com.example.demo</groupId>
 	<artifactId>demo-admin</artifactId>
 	<version>0.0.1</version>
+
 	<parent>
 		<groupId>com.example.demo</groupId>
 		<artifactId>demo-parent</artifactId>
