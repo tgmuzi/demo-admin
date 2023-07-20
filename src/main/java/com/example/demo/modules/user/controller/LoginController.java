@@ -11,6 +11,8 @@ import com.example.demo.utils.AjaxObject;
 import com.example.demo.utils.ShiroUtils;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +97,16 @@ public class LoginController extends AbstractController{
         return "modules/sys/login";
     }
 
+    @PostMapping("/logout")
+    @ResponseBody
+    public AjaxObject logout(HttpServletRequest request)throws IOException {
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
+        }
+        SysUser user = getUser();
+        return AjaxObject.ok().data("退出登录成功");
+    }
     @PostMapping("/login")
     @ResponseBody
     public AjaxObject login(HttpServletRequest request, HttpServletResponse response, @RequestBody User user1)
