@@ -1,29 +1,40 @@
 package com.example.demo;
 
 import com.alibaba.druid.filter.config.ConfigTools;
-import junit.framework.TestCase;
+import com.alibaba.druid.pool.DruidDataSource;
 import org.jasypt.encryption.StringEncryptor;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.demo.*;
-
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import static com.alibaba.druid.filter.config.ConfigTools.encrypt;
 import static com.alibaba.druid.filter.config.ConfigTools.genKeyPair;
 
-class DemoAdminApplicationTests extends TestCase {
+class DemoAdminApplicationTests {
 
 	@Autowired
 	StringEncryptor stringEncryptor;
 
+	//DI注入数据源
+	@Autowired
+	DataSource dataSource;
+
 	@Test
-	void contextLoads() {
-		String e = JasyptUtils.encrypt("root");
-		System.out.println(e);
-		System.out.println(JasyptUtils.decrypt(e) + "???");
+	void contextLoads() throws SQLException {
+		//看一下默认数据源
+		System.out.println(dataSource.getClass());
+		//获得连接
+		Connection connection = dataSource.getConnection();
+		System.out.println(connection);
+		DruidDataSource druidDataSource = (DruidDataSource) dataSource;
+		System.out.println("druidDataSource 数据源最大连接数：" + druidDataSource.getMaxActive());
+		System.out.println("druidDataSource 数据源初始化连接数：" + druidDataSource.getInitialSize());
+		//关闭连接
+		connection.close();
+
 	}
 
 	@Test
@@ -51,6 +62,7 @@ class DemoAdminApplicationTests extends TestCase {
 		String password = "MK+90J8aAWQIjeL7+AFIq0dDQvUgXoih67jwPftfgs918tywCF9pCB3s6oY0apEo8mn+hClDWRmSeZr4mS2IiA==";
 		System.out.println("PASSWORD:" + ConfigTools.decrypt(key,password));
 	}
+
 	public static void main(String[] args) throws Exception {
 		String password = "900217ai";
 //		String[] arr = genKeyPair(512);
