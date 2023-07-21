@@ -21,7 +21,7 @@ public class ScheduledTaskRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         log.info("----初始化定时任务开始----");
         scheduledTaskService.initTask();
-        scheduledTaskService.All_Bot();
+//        scheduledTaskService.All_Bot();
         log.info("----初始化定时任务完成----");
     }
 }
