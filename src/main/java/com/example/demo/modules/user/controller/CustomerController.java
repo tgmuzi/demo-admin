@@ -3,6 +3,7 @@ package com.example.demo.modules.user.controller;
 import java.util.List;
 
 import com.example.demo.service.modules.user.service.CustomerSrevice;
+import com.example.demo.utils.AjaxObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.modules.user.entity.Customer;
-import com.example.demo.utils.AjaxObject;
 
 @Controller
 @RequestMapping("${adminPath}/customer")

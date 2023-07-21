@@ -2,6 +2,7 @@ package com.example.demo.modules.user.controller;
 
 import com.example.demo.modules.AbstractController;
 import com.example.demo.service.modules.user.service.SysUserService;
+import com.example.demo.utils.AjaxObject;
 import com.example.demo.utils.GoogleAuthenticator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.example.demo.modules.user.entity.SysUser;
-import com.example.demo.utils.AjaxObject;
 
 import cn.hutool.core.lang.Console;
 
