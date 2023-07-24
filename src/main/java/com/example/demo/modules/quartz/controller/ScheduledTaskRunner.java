@@ -1,6 +1,5 @@
 package com.example.demo.modules.quartz.controller;
 
-import com.example.demo.modules.quartz.config.ScheduledConfig;
 import com.example.demo.modules.quartz.service.ScheduledTaskService;
 import groovy.util.logging.Slf4j;
 import org.apache.log4j.Logger;
@@ -21,7 +20,7 @@ public class ScheduledTaskRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         log.info("----初始化定时任务开始----");
         scheduledTaskService.initTask();
-//        scheduledTaskService.All_Bot();
+        scheduledTaskService.All_Bot();
         log.info("----初始化定时任务完成----");
     }
 }
