@@ -75,7 +75,8 @@ public class MybatisplusGenerator extends TestCase {
         // strategy.setTablePrefix(new String[]{"LOT_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
         strategy.setInclude(new String[] {
-                "TRX_ADRESS"
+                "goods",
+                "goods_type"
         }); // 需要生成的表
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 字段名生成策略
@@ -102,11 +103,11 @@ public class MybatisplusGenerator extends TestCase {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.zeus.modules");
-        pc.setModuleName("trx");
+        pc.setParent("com.example.demo");
+        pc.setModuleName("goods");
         pc.setController("controller");
-        pc.setMapper("dao");
-        pc.setXml("mapper.trx");
+        pc.setMapper("mapper");
+        pc.setXml("mapper.goods");
         // pc.setController("controller");
         mpg.setPackageInfo(pc);
 
