@@ -57,7 +57,7 @@
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a href="javascript:;">修改头像</a></li>
                         <li class="divider"></li>
-                        <li><a href="javascript:;">修改密码</a></li>
+                        <li><a href="javascript:;" @click="updatePassword">修改密码</a></li>
                         <li class="divider"></li>
                         <li><a href="javascript:;" @click="logout">安全退出</a></li>
                     </ul>
@@ -227,6 +227,34 @@
         </div>
     </div>
     <!--右侧边栏结束-->
+    <div id="passwordLayer" style="display: none">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">原密码</div>
+                            <div class="col-sm-7">
+                                <input type="password" class="form-control required" v-model="password" th:placeholder="#{from.password}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">新密码</div>
+                            <div class="col-sm-7">
+                                <input type="password" class="form-control required" v-model="newPassword1" th:placeholder="#{from.password1}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 control-label">确认新密码</div>
+                            <div class="col-sm-7">
+                                <input type="password" class="form-control required" v-model="newPassword2"  th:placeholder="#{from.password2}"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div th:include	="modules/layout::js">
 </div>

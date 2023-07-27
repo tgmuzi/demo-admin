@@ -71,6 +71,9 @@ var vm = new Vue({
         menuList:{},
         navTitle:"",
         user: {},
+        password:'',
+		newPassword1:'',
+		newPassword2:'',
     },
     methods:{
         refreshCode:function(){
@@ -128,6 +131,48 @@ var vm = new Vue({
             //跳转到登录页面
             location.href = baseURL + 'logout';
             disconnect();
+        },
+        updatePassword: function(){
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-molv',
+                title: "修改密码",
+                area: ['777px', '333px'],
+                shadeClose: false,
+                content: jQuery("#passwordLayer"),
+                btn: ['修改','取消'],
+                btn1: function (index) {
+                    if(!vm.password){
+                        layer.msg("请输入旧密码");
+                        return false;
+                    }
+                    if(!vm.newPassword1){
+                        layer.msg("请输入新密码");
+                        return false;
+                    }
+                    if(!vm.newPassword2||vm.newPassword1!=vm.newPassword2){
+                        layer.msg("两次新密码输入错误");
+                        return false;
+                    }
+                    var data = "password="+vm.password+"&newPassword="+vm.newPassword1;
+                    $.ajax({
+                        type: "POST",
+                        url: baseURL + "password",
+                        data: data,
+                        dataType: "json",
+                        success: function(r){
+                            if(r.code == 0){
+                                layer.close(index);
+                                layer.alert('修改成功', function(){
+                                    location.reload();
+                                });
+                            }else{
+                                layer.msg(r.msg);
+                            }
+                        }
+                    });
+                }
+            });
         },
     },
     created: function(){

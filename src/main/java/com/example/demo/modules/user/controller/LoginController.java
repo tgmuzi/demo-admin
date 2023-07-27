@@ -4,14 +4,17 @@ import com.alibaba.druid.util.StringUtils;
 import com.example.demo.googleConfig.GoogleAuthenticator;
 import com.example.demo.googleConfig.QRCodeUtil;
 import com.example.demo.modules.AbstractController;
+import com.example.demo.modules.exception.BusinessException;
 import com.example.demo.modules.user.entity.SysUser;
 import com.example.demo.modules.user.entity.User;
 import com.example.demo.service.modules.user.service.LoginService;
 import com.example.demo.utils.AjaxObject;
+import com.example.demo.utils.ErrorCode;
 import com.example.demo.utils.ShiroUtils;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,6 +100,27 @@ public class LoginController extends AbstractController{
         return "modules/sys/login";
     }
 
+    /**
+     * 修改登录用户密码
+     */
+    @RequestMapping("/password")
+    @ResponseBody
+    public AjaxObject password(String password, String newPassword) {
+        // Assert.isBlank(newPassword, "新密码不为能空");
+
+        // sha256加密
+        password = new Sha256Hash(password, getUser().getSalt()).toHex();
+        // sha256加密
+        newPassword = new Sha256Hash(newPassword, getUser().getSalt()).toHex();
+
+        // 更新密码
+        int count = loginService.updatePassword(getUserId(), password, newPassword);
+        if (count == 0) {
+            throw new BusinessException(ErrorCode.OLD_PASSWORD_ERROR.getCode(), ErrorCode.OLD_PASSWORD_ERROR.getDesc(), ErrorCode.OLD_PASSWORD_ERROR.getI18n());
+        }
+
+        return AjaxObject.ok();
+    }
     @GetMapping("/logout")
     @ResponseBody
     public AjaxObject logout(HttpServletRequest request)throws IOException {
@@ -114,13 +138,16 @@ public class LoginController extends AbstractController{
         if (StringUtils.isEmpty(user1.getUserName()) || StringUtils.isEmpty(user1.getPassword())) {
             return AjaxObject.error("请输入用户名和密码！");
         }
-        // String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+//         String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+//        if(!user1.getCaptcha().equalsIgnoreCase(kaptcha)){
+//            throw new BusinessException(ErrorCode.KAPTCHA_ERROR.getCode(), ErrorCode.KAPTCHA_ERROR.getDesc(),ErrorCode.KAPTCHA_ERROR.getI18n());
+//        }
         // 用户信息
         SysUser user = loginService.getUserByName(user1.getUserName());
         // 账号不存在、密码错误
-//        if (user == null || !user.getPassword().equals(new Sha256Hash(user1.getPassword(), user.getSalt()).toHex())) {
-//            throw new BusinessException("密码错误");
-//        }
+        if (user == null || !user.getPassword().equals(new Sha256Hash(user1.getPassword(), user.getSalt()).toHex())) {
+            throw new BusinessException("密码错误");
+        }
         return loginService.createToken(request, response, user);
     }
 
