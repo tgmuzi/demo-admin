@@ -97,7 +97,7 @@ public class LoginController extends AbstractController{
         return "modules/sys/login";
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     @ResponseBody
     public AjaxObject logout(HttpServletRequest request)throws IOException {
         Subject subject = SecurityUtils.getSubject();

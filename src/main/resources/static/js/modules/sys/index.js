@@ -120,7 +120,15 @@ var vm = new Vue({
               }
             }
           });
-        }
+        },
+        logout: function () {
+			//删除本地token
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId");
+            //跳转到登录页面
+            location.href = baseURL + 'logout';
+            disconnect();
+        },
     },
     created: function(){
       this.getMenuList();

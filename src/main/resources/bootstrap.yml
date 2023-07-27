@@ -47,7 +47,6 @@ server:
   port: 9001
   servler:
     contest-path: /a
-  shutdown: graceful #开启优雅停机
 
 management:
   endpoints:

@@ -1,12 +1,14 @@
 package com.example.demo.config;
 
 import com.example.demo.modules.oAuth.CustomRealm;
+import com.example.demo.utils.oAuth.OAuth2Filter;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
@@ -14,6 +16,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -63,6 +67,13 @@ public class shiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setLoginUrl(remotePropertiesConfig.getAdminPath() + "/login");
         shiroFilterFactoryBean.setUnauthorizedUrl(remotePropertiesConfig.getAdminPath() + "/notRole");
+
+        Map<String, Filter> filters = new HashMap<>();
+        filters.put("oauth2", new OAuth2Filter());// oauth过滤
+        LogoutFilter logoutFilter = new LogoutFilter();
+        logoutFilter.setRedirectUrl(remotePropertiesConfig.getAdminPath()+"/login");
+        filters.put("logout", logoutFilter);// logout过滤
+        shiroFilterFactoryBean.setFilters(filters);
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // <!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         filterChainDefinitionMap.put("/static/**", "anon");
@@ -78,6 +89,7 @@ public class shiroConfig {
         filterChainDefinitionMap.put(remotePropertiesConfig.getAdminPath() + "/captcha.jpg", "anon");// 放行获取验证码
         filterChainDefinitionMap.put(remotePropertiesConfig.getAdminPath() + "/login", "anon");// 放行登录
         filterChainDefinitionMap.put(remotePropertiesConfig.getAdminPath() + "/register", "anon");// 放行注册
+        filterChainDefinitionMap.put(remotePropertiesConfig.getAdminPath()+"/logout", "logout");
         // 主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截 剩余的都需要认证
         filterChainDefinitionMap.put(remotePropertiesConfig.getAdminPath() + "/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
