@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>回味</title>
+    <link href="../../../css/modules/index.css" rel="stylesheet">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: black; /* <!--此处调整初次闪屏背景颜色--> */
+      }
+      canvas {
+        display: block;
+      }
+      img{
+          width: 110px;
+          height: 45px;
+          position: absolute;
+          right: 30px;
+          top: 5px;
+          border-radius: 50px;
+      }
+    </style>
+    
+  </head>
+  <body>
+    <div id="app">
+        <canvas id="ad"></canvas>
+        <div class="dowebok">
+
+            <div class="logo"></div>
+            
+            <div class="input_outer">
+            <span class="u_user"></span>
+            <input class="text" id="userName" v-model="user.userName" type="text" autocomplete="off" placeholder="端脑">
+            </div>
+            <div class="input_outer">
+            <span class="us_uer"></span>
+            <input class="text" id="password" v-model="user.password" type="password" autocomplete="off" placeholder="端脑ID">
+            </div>
+            <div style="height: 48px;padding: 0 5px;margin-bottom: 30px;border-radius: 50px;position: relative;">
+              <div class="input_outer" style="width: 60%;">
+                <span class="us_uer"></span>
+                <div class="form-group">
+                    <input class="text" type="text" v-model="user.captcha" @keyup.enter="query" >
+                </div>
+            </div>
+              <div class="form-group">
+                &nbsp;
+                <img class="pointer" :src="src" @click="refreshCode">
+              </div>
+            </div>
+            <div class="form-item"><button id="submit" @click="query">登 录</button></div>
+            
+            </div>
+    </div>
+    <div th:include	="modules/layout::js">
+    </div>
+    </body>
+    <script src="../../../js/modules/sys/index.js"></script>
+    <script>
+        var ad = document.getElementById("ad");
+        var ctx = ad.getContext("2d");
+        ad.height = window.innerHeight;
+        ad.width = window.innerWidth;
+        var chinese = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";   
+      //   <!--此处添加需要显示的文字-->
+        chinese = chinese.split("");
+        var font_size = 10;  
+        // <!--此处调整字符大小-->
+        var columns = ad.width / font_size;
+        var drops = [];
+        for (var x = 0; x < columns; x++) drops[x] = 1;
+        function draw() {
+          ctx.fillStyle = "rgba(0, 0, 0, 0.05)";  // <!--此处最后一个参数调整背景字符透明度-->
+          ctx.fillRect(0, 0, ad.width, ad.height);
+          ctx.fillStyle = "#0F0";   // <!--此处为字体颜色，十六进制颜色码-->
+          ctx.font = font_size + "px arial";
+          for (var i = 0; i < drops.length; i++) {
+            var text = chinese[Math.floor(Math.random() * chinese.length)];  // <!--此处修改成text="具体文字"  可以实现只显示固定文字无随机闪烁效果-->
+            ctx.fillText(text, i * font_size, drops[i] * font_size);
+            if (drops[i] * font_size > ad.height && Math.random() > 0.975)  // <!--此处最后一个参数调整文字离散程度，数字越小越密集-->
+              drops[i] = 0;
+            drops[i]++;
+          }
+        }
+        setInterval(draw, 50); /* <!--此处调整下落速度，数字越小越快--> */
+      </script>
+</html>

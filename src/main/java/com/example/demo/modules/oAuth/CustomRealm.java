@@ -17,8 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.druid.util.StringUtils;
-import com.example.demo.modules.user.entity.SysUser;
-import com.example.demo.modules.user.entity.SysUserToken;
+import com.example.demo.modules.entity.user.entity.SysUser;
+import com.example.demo.modules.entity.user.entity.SysUserToken;
 
 @Component
 public class CustomRealm extends AuthorizingRealm {

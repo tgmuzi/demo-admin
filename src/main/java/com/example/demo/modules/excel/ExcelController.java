@@ -1,7 +1,7 @@
 package com.example.demo.modules.excel;
 
 import com.example.demo.modules.AbstractController;
-import com.example.demo.modules.sys.entity.SysMenu;
+import com.example.demo.modules.entity.sys.entity.SysMenu;
 import com.example.demo.service.modules.excel.ExcelService;
 import com.example.demo.utils.AjaxObject;
 import org.springframework.beans.factory.annotation.Autowired;

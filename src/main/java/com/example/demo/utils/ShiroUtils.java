@@ -4,7 +4,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
-import com.example.demo.modules.user.entity.User;
+import com.example.demo.modules.entity.user.entity.User;
 
 /**
  * Shiro工具类

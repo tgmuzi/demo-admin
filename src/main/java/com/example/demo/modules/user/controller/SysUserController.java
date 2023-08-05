@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.example.demo.modules.user.entity.SysUser;
+import com.example.demo.modules.entity.user.entity.SysUser;
 
 import cn.hutool.core.lang.Console;
 

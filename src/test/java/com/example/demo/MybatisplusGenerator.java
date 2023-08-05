@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.generator.config.converts.OracleTypeConvert;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import junit.framework.TestCase;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +17,7 @@ import java.util.Map;
 /**
  * Unit test for simple App.
  */
-public class MybatisplusGenerator extends TestCase {
+public class MybatisplusGenerator {
     /**
      * <p>
      * MySQL 生成演示

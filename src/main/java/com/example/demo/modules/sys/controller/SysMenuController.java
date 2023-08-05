@@ -1,6 +1,6 @@
 package com.example.demo.modules.sys.controller;
 
-import com.example.demo.modules.sys.entity.SysMenu;
+import com.example.demo.modules.entity.sys.entity.SysMenu;
 import com.example.demo.service.modules.sys.service.ISysMenuService;
 import com.example.demo.utils.AjaxObject;
 import org.springframework.ui.Model;

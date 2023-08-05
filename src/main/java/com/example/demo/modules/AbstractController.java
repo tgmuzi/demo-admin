@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.demo.modules.user.entity.SysUser;
+import com.example.demo.modules.entity.user.entity.SysUser;
 
 import javax.servlet.http.HttpServletRequest;
 

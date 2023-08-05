@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.modules.user.entity.Customer;
+import com.example.demo.modules.entity.user.entity.Customer;
 
 @Controller
 @RequestMapping("${adminPath}/customer")

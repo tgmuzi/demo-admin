@@ -3,25 +3,36 @@ package com.example.demo.utils;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.modules.quartz.telegramBot.function.*;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import com.example.demo.modules.quartz.utils.Constant;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * 机器人脚本
+ */
 public class ExecBot extends TelegramLongPollingBot {
 
     //填你自己的token和username
-    private String token ="6170863910:AAGo3EGe3QSHE6-um6yeB4H4TuyOe8GoDRw";
-    private String username ="AllBeings_bot";
+    private String token = "6170863910:AAGo3EGe3QSHE6-um6yeB4H4TuyOe8GoDRw";
+    private String username = "AllBeings_bot";
 
     public ExecBot() {
-        this( new DefaultBotOptions());
+        this(new DefaultBotOptions());
     }
 
     public ExecBot(DefaultBotOptions options) {
@@ -40,48 +51,69 @@ public class ExecBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (update.hasMessage()) {
+        if (update.hasMessage() && update.getMessage().hasText()) {
             Message message = update.getMessage();
 
             Long chatId = message.getChatId();
-            String lastName = message.getChat().getLastName();
+            String lastName = message.getChat().getFirstName() + (message.getChat().getLastName() == null ? "" : message.getChat().getLastName());
             String userName = message.getChat().getUserName();
             String text = message.getText();
-            if (text.startsWith("/now")) {
-            } else if (text.startsWith("/week")) {
-            } else if (text.startsWith("/de")) {
-                try {
-                    sendMessAge(token,chatId,text);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if (text.startsWith("/en")) {
-            } else if (text.startsWith("/start")) {
-                JSONObject reply_markup = new JSONObject();
-                JSONArray inline_keyboard = new JSONArray();
-                JSONArray jsonArray0 = getRowInlineKeyboard(new String[]{"管理我的群组", "1" + "-callbackdata"});
-                JSONArray jsonArray1 = getRowInlineKeyboard(new String[]{"合作品牌", "2" + "-callbackdata"}, new String[]{"荣誉榜单", "3" + "-callbackdata"});
-                JSONArray jsonArray2 = getRowInlineKeyboard(new String[]{"使用指南", "4" + "-callbackdata"}, new String[]{"意见箱", "5" + "-callbackdata"});
-                JSONArray jsonArray3 = getRowInlineKeyboard(new String[]{"购买广告", "6" + "-callbackdata"}, new String[]{"我的钱包", "7" + "-callbackdata"});
-                inline_keyboard.add(jsonArray0);
-                inline_keyboard.add(jsonArray1);
-                inline_keyboard.add(jsonArray2);
-                inline_keyboard.add(jsonArray3);
-                reply_markup.put("inline_keyboard", inline_keyboard);
-    //                    sendMsg(reply_markup.toString(),chatId);
-                try {
-                    String fromText="\uD83D\uDC4F 欢迎  *" + lastName + " *\n\n" + "UID:`" + chatId + "`";
-                    sendDmiPhoto(token,chatId,fromText,reply_markup);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            Integer messageId = message.getMessageId();
+            switch (text) {
+                case "/now":
+                    break;
+                case "/week":
+                    break;
+                case "/de":
+                    try {
+                        sendMessAge(token, chatId, text);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "/start":
+                    String fromText = "\uD83D\uDC4F 欢迎 *"+ lastName +"*\n\n UID：`"+chatId+"`";
+                    sendBottomButton(chatId, fromText);
+                    break;
+                case "查询":
+                    fromText =  "\uD83D\uDC4F 欢迎  *"  + lastName + "*\n\n UID：`" + chatId +"`\n 请输入TRC地址：";
+                    try {
+                        sendMsg(chatId, messageId, fromText);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "查汇率":
+                    String infoHuiLv= HuiLv.huilv();
+                    sendMsg(chatId, messageId ,infoHuiLv);
+                    break;
+                case "兑换TRX":
+                    String huilv = DuiHuanTRX.trx(lastName);
+                    sendMsg(chatId,messageId, huilv);
+                    break;
+                case "已绑定地址":
+                    fromText = "\uD83D\uDC4F 欢迎  *"  + lastName + "*\n@["  + userName + "]\n" + "TRC地址：\n`"+ Constant.TRX_ADDRESS +"`";
+                    sendMsg(chatId,messageId, fromText);
+                    break;
+                case "监听":
+                    fromText = "\uD83D\uDC4F 欢迎  *"  + lastName + "*\n  @["  + userName + "]\n" +  "请输入TRC地址：";
+                    sendMsg(chatId, messageId,fromText);
+                    break;
+                case "客服":
+                    fromText = "\uD83D\uDC4F 欢迎  *"  + lastName + "*\n  @["  + userName + "]\n" +  "客服地址地址：[客服](https://www.google.com/search?q=telegram)";
+                    sendMsg(chatId, messageId,fromText);
+                    break;
+                default:
+                    fromText = ErCiShiJIan.duoci(text);
+                    sendMsg(chatId, messageId,fromText);
+                    break;
             }
-        }else {
+        } else {
             String data = update.getCallbackQuery().getData().split("-")[0];
             Long chatId = update.getCallbackQuery().getFrom().getId();
             Integer messageId = update.getCallbackQuery().getMessage().getMessageId();
             String lastName = update.getCallbackQuery().getFrom().getLastName();
-            String fromText="\uD83D\uDC4F 欢迎  *" + lastName + " *\n\n" + "UID:`" + chatId + "`";
+            String fromText = "\uD83D\uDC4F 欢迎  *" + lastName + " *\n\n" + "UID:`" + chatId + "`";
 
             JSONObject reply_markup = new JSONObject();
             JSONArray inline_keyboard = new JSONArray();
@@ -95,36 +127,37 @@ public class ExecBot extends TelegramLongPollingBot {
             switch (data) {
                 case "1":
                     System.out.println(update.getCallbackQuery().getData());
-                    editMessageText(token,chatId,messageId,fromText,reply_markup);
+                    editMessageText(token, chatId, messageId, fromText, reply_markup);
                     break;
                 case "2":
                     System.out.println(update.getCallbackQuery().getData());
-                    editMessageText(token,chatId,messageId,fromText,reply_markup);
+                    editMessageText(token, chatId, messageId, fromText, reply_markup);
                     break;
                 case "3":
                     System.out.println(update.getCallbackQuery().getData());
-                    editMessageText(token,chatId,messageId,fromText,reply_markup);
+                    editMessageText(token, chatId, messageId, fromText, reply_markup);
                     break;
                 case "4":
                     System.out.println(update.getCallbackQuery().getData());
-                    editMessageText(token,chatId,messageId,fromText,reply_markup);
+                    editMessageText(token, chatId, messageId, fromText, reply_markup);
                     break;
                 case "5":
                     System.out.println(update.getCallbackQuery().getData());
-                    editMessageText(token,chatId,messageId,fromText,reply_markup);
+                    editMessageText(token, chatId, messageId, fromText, reply_markup);
                     break;
                 case "6":
                     System.out.println(update.getCallbackQuery().getData());
-                    editMessageText(token,chatId,messageId,fromText,reply_markup);
+                    editMessageText(token, chatId, messageId, fromText, reply_markup);
                     break;
                 case "7":
                     System.out.println(update.getCallbackQuery().getData());
-                    editMessageText(token,chatId,messageId,fromText,reply_markup);
+                    editMessageText(token, chatId, messageId, fromText, reply_markup);
                     break;
                 default:
             }
         }
     }
+
     /**
      * 构造一行内联键盘
      */
@@ -139,14 +172,66 @@ public class ExecBot extends TelegramLongPollingBot {
         return jsonArray;
     }
 
+    /**
+     * 构造一行内联键盘
+     */
+    public ReplyKeyboardMarkup getReplyKeyboardMarkup() {
+        KeyboardButton keyboardButton = new KeyboardButton();
+        keyboardButton.setText("1");
+        keyboardButton.setRequestContact(false);
+        keyboardButton.setRequestLocation(false);
+
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        KeyboardRow keyboardRow = new KeyboardRow();
+        keyboardRow.add(keyboardButton);
+        keyboardRows.add(keyboardRow);
+
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setKeyboard(keyboardRows);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+        replyKeyboardMarkup.setSelective(true);
+        return replyKeyboardMarkup;
+    }
+
     //回复普通文本消息
-    public void sendMsg(String text,Long chatId){
-        SendMessage response = new SendMessage();
-        response.setChatId(String.valueOf(chatId));
-        response.setText(text);
+    public void sendMsg(long chatId,Integer messageId, String fromText) {
+        //创建一个SendMessage对象
+        SendMessage message = new SendMessage();
+        message.setChatId(chatId + "");
+        message.setReplyToMessageId(messageId);
+        message.setText(fromText);
+        message.enableHtml(true);
+        message.enableMarkdown(true);
+        //使用Bot的execute方法发送消息
         try {
-            execute(response);
+            execute(message);
         } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+    //内置按钮
+    public void sendInlineKeyboardButton(long chatId) {
+        InlineKeyboardMarkup keyboardRows = BuiltInButton.sendInlineKeyboardButton(chatId);
+        SendMessage message = SendMessage.builder().text("暂时停用此功能！").chatId(chatId+"").build();
+        message.setReplyMarkup(keyboardRows);
+        //使用Bot的execute方法发送消息
+        try {
+            execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+    //底部菜单
+    public void sendBottomButton(long chatId ,String text) {
+        ReplyKeyboardMarkup keyboardRows = BottomButton.sendBottomButton();
+        SendMessage message = SendMessage.builder().text(text).chatId(chatId+"").build();
+        message.setReplyMarkup(keyboardRows);
+        //使用Bot的execute方法发送消息
+        try {
+            execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
     }
 
@@ -159,8 +244,8 @@ public class ExecBot extends TelegramLongPollingBot {
             String line;
             BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             StringBuffer out = new StringBuffer();
-            while ((line = stdoutReader.readLine()) != null ) {
-                out.append(line+"\n");
+            while ((line = stdoutReader.readLine()) != null) {
+                out.append(line + "\n");
             }
             try {
                 process.waitFor();
@@ -174,6 +259,7 @@ public class ExecBot extends TelegramLongPollingBot {
         }
         return null;
     }
+
     private void sendDmiPhoto(String botToken, Long chatId, String text, JSONObject replyMarkup) throws Exception {
         String url = "https://api.telegram.org/bot" + botToken + "/sendMessage";
         JSONObject json = new JSONObject();
@@ -182,22 +268,28 @@ public class ExecBot extends TelegramLongPollingBot {
         json.put("parse_mode", "MarkdownV2");
         json.put("disable_web_page_preview", true);
         json.put("disable_notification", true);
-        json.put("reply_markup", replyMarkup);
+//        json.put("reply_markup", replyMarkup);
         HttpUtils.postJSON(url, json.toJSONString());
 
     }
-    private void sendMessAge(String botToken, Long chatId, String text) throws Exception {
-        String url = "http://127.0.0.1:1080/bot" + botToken + "/sendMessage";
+
+    private void sendMessAge(String botToken, Long chatId, String text)  {
+        String url = "https://api.telegram.org/bot" + botToken + "/sendMessage";
         JSONObject json = new JSONObject();
         json.put("chat_id", chatId);
         json.put("text", text);
         json.put("parse_mode", "MarkdownV2");
         json.put("disable_web_page_preview", true);
         json.put("disable_notification", true);
-        HttpUtils.postJSON(url, json.toJSONString());
+        try {
+            HttpUtils.postJSON(url, json.toJSONString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
-    private void editMessageText(String botToken, Long chatId,Integer messageId, String text, JSONObject replyMarkup)  {
+
+    private void editMessageText(String botToken, Long chatId, Integer messageId, String text, JSONObject replyMarkup) {
         String url = "https://api.telegram.org/bot" + botToken + "/editMessageText";
         JSONObject json = new JSONObject();
         json.put("chat_id", chatId);
@@ -213,6 +305,7 @@ public class ExecBot extends TelegramLongPollingBot {
         }
 
     }
+
 }
 
 
